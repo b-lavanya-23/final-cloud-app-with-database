@@ -107,8 +107,11 @@ class Question(models.Model):
     # question text
     question_text=models.CharField(max_length=500,default="qustion_text")
     # question grade/mark
-    grade=models.CharField(max_length=5)
-    question=models.ManyToManyField(Course)
+    grade=models.IntegerField(default=0)
+    course=models.ManyToManyField(Course)
+
+    def __str__(self):
+        return str(self.question_text)
 
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
@@ -127,9 +130,14 @@ class Question(models.Model):
     # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
 class Choice(models.Model):
-    choice_text=models.CharField(max_length=300)
-    is_correct=models.BooleanField()
-    choice=models.ManyToManyField(Question)
+    choice_text=models.CharField(max_length=300,default="choice_text")
+    is_correct=models.BooleanField(default=False)
+    question=models.ManyToManyField(Question)
+    question=models.ForeignKey(Question,on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return f"question: {self.question.question_text}, answer:{self.choice_text}, correct:{self.is_correct}"
 
 # <HINT> The submission model
 # One enrollment could have multiple submission
