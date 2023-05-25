@@ -121,7 +121,7 @@ def submit(request, course_id):
         submission_id=submission.id
         submission.save()
 
-    return HttpResponseRedirect(reserve(viewname:'onlinecourse:exam_result', args=(course_id, submission_id)))
+    return HttpResponseRedirect(reserve(viewname='onlinecourse:exam_result', args=(course_id, submission_id)))
 
 
 # <HINT> A example method to collect the selected choices from the exam form from the request object
